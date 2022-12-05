@@ -8,32 +8,27 @@ def ascii_convert(letter): # converto il valore in ascii e sottraggo la differen
     else:
         return ord(letter) - 96
 
-def string_overlap(list):
-    if list[0] <= list[1] and list[0] <= list[2]:
-        return search(list[0], list[1], list[2])
-    elif list[1] <= list[0] and list[1] <= list[2]:
-        return search(list[1], list[0], list[2])
-    elif list[2] <= list[0] and list[2] <= list[1]:
-        return search(list[2], list[0], list[1])
+def string_overlap(first, second, third):
+    if len(first) <= len(second) and len(first) <= len(third):
+        return search(first, second, third)
+    elif len(second) <= len(first) and len(second) <= len(third):
+        return search(second, first, third)
+    elif len(third) <= len(first) and len(third) <= len(second):
+        return search(third, first, second)
 
 def search(shortest, other1, other2):
     for letter in shortest:
         if letter in other1 and letter in other2:
-            print(letter)
             return letter
 
 total = 0
 rucksucks = []
 
-for index, line in enumerate(lines, 0):
-    line = line.lstrip()
-    if index % 3 == 0 and index != 0: 
-        rucksucks.append(line)
-        common_value = string_overlap(rucksucks)
-        total += ascii_convert(common_value)
-        rucksucks.clear()
-    else:
-        rucksucks.append(line)
-    print(line)
+for i in range(0, len(lines), 3):
+    first = lines[i].lstrip()
+    second = lines[i+1].lstrip()
+    third = lines[i+2].lstrip()
+    common_letter = string_overlap(first, second, third)
+    total += ascii_convert(common_letter)
 
 print(total)
